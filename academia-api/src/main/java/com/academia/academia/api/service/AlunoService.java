@@ -6,12 +6,18 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
 
 @Service
 public class AlunoService {
 
     private final AlunoRepository alunoRepository;
+    private static final Logger log = LoggerFactory.getLogger(AlunoService.class);
+
 
     public AlunoService(AlunoRepository alunoRepository) {
         this.alunoRepository = alunoRepository;
@@ -19,12 +25,22 @@ public class AlunoService {
 
     // cadastrando aluno
     public Aluno cadastrarAluno(Aluno aluno) {
-        validarAluno(aluno);
 
-        aluno.setStatus("ATIVO");
+    log.info("Iniciando cadastro de aluno: nome={}, email={}",
+            aluno.getNome(), aluno.getEmail());
 
-        return alunoRepository.save(aluno);
-    }
+    validarAluno(aluno);
+
+    aluno.setStatus("ATIVO");
+
+    Aluno alunoSalvo = alunoRepository.save(aluno);
+
+    log.info("Aluno cadastrado com sucesso: id={}, nome={}",
+            alunoSalvo.getId(), alunoSalvo.getNome());
+
+    return alunoSalvo;
+}
+
 
     // atualizar aluno
     public Aluno atualizarAluno(Aluno aluno) {
@@ -39,7 +55,7 @@ public class AlunoService {
     }
 
     // desativando aluno
-    public void desativarAluno(Long alunoId) {
+    public void desativarAluno(Integer alunoId) {
         Aluno aluno = alunoRepository.findById(alunoId)
                 .orElseThrow(() -> new RuntimeException("Aluno não encontrado"));
             
@@ -52,7 +68,7 @@ public class AlunoService {
     }
 
     //ativar aluno
-    public void ativarAluno(Long alunoId){
+    public void ativarAluno(Integer alunoId){
         Aluno aluno = alunoRepository.findById(alunoId)
             .orElseThrow(() -> new RuntimeException("Aluno não encontrado"));
 
