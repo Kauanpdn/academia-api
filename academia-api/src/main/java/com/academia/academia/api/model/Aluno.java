@@ -10,7 +10,7 @@ public class Aluno {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Integer id;
 
     @Column(nullable = false)
     private String nome;
@@ -30,11 +30,11 @@ public class Aluno {
     public Aluno(){}
 
 
-    public Long getId(){
+    public Integer getId(){
         return id;
     }
 
-    public void setId(Long id){
+    public void setId(Integer id){
         this.id = id;
     }
 
@@ -60,6 +60,14 @@ public class Aluno {
 
     public void setTelefone(String telefone){
         this.telefone = telefone;
+    }
+
+    public LocalDate getDataNascimento(){
+        return dataNascimento;
+    }
+
+    public void setDataNascimento(LocalDate dataNascimento){
+        this.dataNascimento = dataNascimento;
     }
 
     public String getStatus(){
