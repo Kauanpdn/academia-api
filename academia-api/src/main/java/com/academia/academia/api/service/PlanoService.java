@@ -52,7 +52,7 @@ public class PlanoService {
     // =========================
     // BUSCAR POR ID
     // =========================
-    public Plano buscarPorId(Integer id) {
+    public Plano buscarPorId(Long id) {
         log.info("Buscando plano por id={}", id);
 
         Optional<Plano> planoOpt = planoRepository.findById(id);
@@ -71,7 +71,7 @@ public class PlanoService {
     // =========================
     // ATUALIZAR PLANO
     // =========================
-    public Plano atualizarPlano(Integer id, Plano planoAtualizado) {
+    public Plano atualizarPlano(Long id, Plano planoAtualizado) {
         log.info("Iniciando atualização do plano | id={}", id);
 
         Plano planoExistente = buscarPorId(id);
@@ -91,7 +91,7 @@ public class PlanoService {
     // =========================
     // REMOVER PLANO
     // =========================
-    public void removerPlano(Integer id) {
+    public void removerPlano(Long id) {
         log.info("Solicitação para remover plano | id={}", id);
 
         if (!planoRepository.existsById(id)) {

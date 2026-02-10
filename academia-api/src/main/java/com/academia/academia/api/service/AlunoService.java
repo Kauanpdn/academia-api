@@ -55,7 +55,7 @@ public class AlunoService {
     }
 
     // desativando aluno
-    public void desativarAluno(Integer alunoId) {
+    public void desativarAluno(Long alunoId) {
         Aluno aluno = alunoRepository.findById(alunoId)
                 .orElseThrow(() -> new RuntimeException("Aluno não encontrado"));
             
@@ -68,7 +68,7 @@ public class AlunoService {
     }
 
     //ativar aluno
-    public void ativarAluno(Integer alunoId){
+    public void ativarAluno(Long alunoId){
         Aluno aluno = alunoRepository.findById(alunoId)
             .orElseThrow(() -> new RuntimeException("Aluno não encontrado"));
 
