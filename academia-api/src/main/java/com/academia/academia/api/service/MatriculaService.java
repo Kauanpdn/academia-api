@@ -29,20 +29,23 @@ public class MatriculaService {
 
         log.info("Iniciando criação de matrícula | alunoId={} | planoId={}", alunoId, planoId);
 
+        // verifica se aluno existe
         Aluno aluno = alunoRepository.findById(alunoId)
                 .orElseThrow(() -> {
                     log.warn("Aluno não encontrado | id={}", alunoId);
                     return new RuntimeException("Aluno não encontrado");
                 });
 
+        // verifica se plano existe
         Plano plano = planoRepository.findById(planoId)
                 .orElseThrow(() -> {
                     log.warn("Plano não encontrado | id={}", planoId);
                     return new RuntimeException("Plano não encontrado");
                 });
 
+        // verifica se já existe matrícula ativa
         boolean existeAtiva =
-                matriculaRepository.existsByAlunoAndStatus(aluno, "ATIVA");
+                matriculaRepository.existsByAlunoAndStatus(alunoId, "ATIVA");
 
         if (existeAtiva) {
             log.warn("Aluno já possui matrícula ativa | alunoId={}", alunoId);

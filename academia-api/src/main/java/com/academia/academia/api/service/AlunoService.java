@@ -6,18 +6,16 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-
 
 @Service
 public class AlunoService {
 
     private final AlunoRepository alunoRepository;
     private static final Logger log = LoggerFactory.getLogger(AlunoService.class);
-
 
     public AlunoService(AlunoRepository alunoRepository) {
         this.alunoRepository = alunoRepository;
@@ -26,30 +24,44 @@ public class AlunoService {
     // cadastrando aluno
     public Aluno cadastrarAluno(Aluno aluno) {
 
-    log.info("Iniciando cadastro de aluno: nome={}, email={}",
-            aluno.getNome(), aluno.getEmail());
-
-    validarAluno(aluno);
-
-    aluno.setStatus("ATIVO");
-
-    Aluno alunoSalvo = alunoRepository.save(aluno);
-
-    log.info("Aluno cadastrado com sucesso: id={}, nome={}",
-            alunoSalvo.getId(), alunoSalvo.getNome());
-
-    return alunoSalvo;
-}
-
-
-    // atualizar aluno
-    public Aluno atualizarAluno(Aluno aluno) {
-
-        if (aluno.getId() == null) {
-            throw new RuntimeException("ID do aluno inválido para atualização");
-        }
+        log.info("Iniciando cadastro de aluno: nome={}, email={}",
+                aluno.getNome(), aluno.getEmail());
 
         validarAluno(aluno);
+
+        aluno.setStatus("ATIVO");
+
+        Aluno alunoSalvo = alunoRepository.save(aluno);
+
+        log.info("Aluno cadastrado com sucesso: id={}, nome={}",
+                alunoSalvo.getId(), alunoSalvo.getNome());
+
+        return alunoSalvo;
+    }
+
+    // Listar todos
+    public List<Aluno> listarTodos() {
+        return alunoRepository.findAll();
+    }
+
+    // Buscar por ID
+    public Aluno buscarPorId(Long id) {
+        return alunoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Aluno não encontrado"));
+    }
+
+    // Atualizar aluno corretamente
+    public Aluno atualizarAluno(Long id, Aluno dadosAtualizados) {
+
+        Aluno aluno = alunoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Aluno não encontrado"));
+
+        validarAluno(dadosAtualizados);
+
+        aluno.setNome(dadosAtualizados.getNome());
+        aluno.setEmail(dadosAtualizados.getEmail());
+        aluno.setTelefone(dadosAtualizados.getTelefone());
+        aluno.setDataNascimento(dadosAtualizados.getDataNascimento());
 
         return alunoRepository.save(aluno);
     }
@@ -58,24 +70,23 @@ public class AlunoService {
     public void desativarAluno(Long alunoId) {
         Aluno aluno = alunoRepository.findById(alunoId)
                 .orElseThrow(() -> new RuntimeException("Aluno não encontrado"));
-            
-            if ("INATIVO".equals(aluno.getStatus())) {
-                throw new RuntimeException("Aluno já está inativo");
-            }
 
-            aluno.setStatus("INATIVO");
-            alunoRepository.save(aluno);
+        if ("INATIVO".equals(aluno.getStatus())) {
+            throw new RuntimeException("Aluno já está inativo");
+        }
+
+        aluno.setStatus("INATIVO");
+        alunoRepository.save(aluno);
     }
 
-    //ativar aluno
-    public void ativarAluno(Long alunoId){
+    // ativar aluno
+    public void ativarAluno(Long alunoId) {
         Aluno aluno = alunoRepository.findById(alunoId)
-            .orElseThrow(() -> new RuntimeException("Aluno não encontrado"));
+                .orElseThrow(() -> new RuntimeException("Aluno não encontrado"));
 
-            aluno.setStatus("ATIVO");
-            alunoRepository.save(aluno);
+        aluno.setStatus("ATIVO");
+        alunoRepository.save(aluno);
     }
-    
 
     // validando informações do aluno e aplicando estratégia de negócio
     public void validarAluno(Aluno aluno) {
