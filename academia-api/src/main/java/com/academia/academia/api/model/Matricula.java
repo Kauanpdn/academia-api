@@ -12,11 +12,13 @@ public class Matricula {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "aluno_id", nullable = false)
-    private Long alunoId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @Column(name = "alunoId", nullable = false)
+    private Aluno aluno;
 
-    @Column(name = "plano_id", nullable = false)
-    private Long planoId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @Column(name = "planoId", nullable = false)
+    private Plano plano;
 
     @Column(name = "data_inicio", nullable = false)
     private LocalDate dataInicio;
@@ -43,20 +45,20 @@ public class Matricula {
         this.id = id;
     }
 
-    public Long getAlunoId() {
-        return alunoId;
+    public Aluno getAluno() {
+        return aluno;
     }
 
-    public void setAlunoId(Long alunoId) {
-        this.alunoId = alunoId;
+    public void setAluno(Aluno aluno) {
+        this.aluno = aluno;
     }
 
-    public Long getPlanoId() {
-        return planoId;
+    public Plano getPlano() {
+        return plano;
     }
 
-    public void setPlanoId(Long planoId) {
-        this.planoId = planoId;
+    public void setPlano(Plano plano) {
+        this.plano = plano;
     }
 
     public LocalDate getDataInicio() {

@@ -45,7 +45,7 @@ public class MatriculaService {
 
         // verifica se já existe matrícula ativa
         boolean existeAtiva =
-                matriculaRepository.existsByAlunoAndStatus(alunoId, "ATIVA");
+                matriculaRepository.existsByAlunoAndStatus(aluno, "ATIVA");
 
         if (existeAtiva) {
             log.warn("Aluno já possui matrícula ativa | alunoId={}", alunoId);
@@ -53,8 +53,8 @@ public class MatriculaService {
         }
 
         Matricula matricula = new Matricula();
-        matricula.setAlunoId(alunoId);
-        matricula.setPlanoId(planoId);
+        matricula.setAluno(aluno);
+        matricula.setPlano(plano);
         matricula.setDataInicio(LocalDate.now());
         matricula.setStatus("ATIVA");
         matricula.setValorContratado(plano.getValor());
