@@ -1,5 +1,6 @@
 package com.academia.academia.api.repository;
 
+
 import com.academia.academia.api.model.Aluno;
 import com.academia.academia.api.model.Matricula;
 import org.springframework.data.jpa.repository.JpaRepository;

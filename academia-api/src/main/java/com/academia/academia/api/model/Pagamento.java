@@ -9,25 +9,24 @@ import java.time.LocalDate;
 public class Pagamento {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "matricula_id", nullable = false)
+    
     private Long matriculaId;
 
-    @Column(nullable = false)
+    
     private BigDecimal valor;
 
-    @Column(name = "forma_pagamento", nullable = false)
+    
     private String formaPagamento;
 
-    @Column(nullable = false)
+    
     private String status;
 
-    @Column(name = "data_vencimento", nullable = false)
+    
     private LocalDate dataVencimento;
 
-    @Column(name = "data_pagamento")
+    
     private LocalDate dataPagamento;
 
     public Long getId() {

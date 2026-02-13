@@ -13,23 +13,19 @@ public class Matricula {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @Column(name = "alunoId", nullable = false)
+    @JoinColumn(name = "alunoId" , nullable = false)
     private Aluno aluno;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @Column(name = "planoId", nullable = false)
+    @JoinColumn(name = "planoId", nullable = false)
     private Plano plano;
 
-    @Column(name = "data_inicio", nullable = false)
     private LocalDate dataInicio;
 
-    @Column(name = "data_fim")
     private LocalDate dataFim;
 
-    @Column(nullable = false, length = 20)
     private String status;
 
-    @Column(name = "valor_contratado", nullable = false)
     private BigDecimal valorContratado;
 
     public Matricula() {
